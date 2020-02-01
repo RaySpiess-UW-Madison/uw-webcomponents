@@ -18,8 +18,10 @@ public function __construct( ) {
 
       $this->shortcode = new UwWebComponents_Shortcode(
         'myuw-badge', 
-        array('url', 'theme', 'border')
+        array('url', '', 'default')
       );
+
+     // array('url', 'theme', 'border')
  
     // component scripts 
    // add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ));
@@ -63,24 +65,26 @@ public function add_web_component() {
  // Add myuw-badge shortcode with url attribute
  public function add_web_component_shortcode($atts) {
   $result = "";
+  $shortcode = "";
 
   $name =  $this->shortcode->name;
   //$attsArray =  $this->shortcode->atts;
   $attsArray =  $this->shortcode->getAttsArray();
 
-  $this->debug = $this->debug.' ' .count($atts) . '<br/>';
+  $this->debug = $this->debug.' ' .count($atts) .' - '. count($attsArray).  '<br/>';
+
+  $shortcode = $name;
 
   // from loaded list 
    foreach ($attsArray as $loadedAtt) {
-    $this->debug = $this->debug. ' - '.  $loadedAtt. ' => ';
+    $this->debug = $this->debug. ' - '.  $loadedAtt["fieldName"]. ' => ';
+    $this->debug = $this->debug. ''.  $atts[$loadedAtt["fieldName"]]. '<br/>';
 
-    $this->debug = $this->debug. ''.  $atts[$loadedAtt]. '<br/>';
-
+    $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '='. $atts[$loadedAtt["fieldName"]];
     // from the shortcode
     //foreach ($atts as $shortcodeAtt) {
       //$this->debug = $this->debug. ' -- '.  $shortcodeAtt. '<br/>';
     //}
-
   }
   
   $url = "https://my.wisc.edu";
@@ -101,7 +105,7 @@ public function add_web_component() {
 
   $result = '<myuw-badge url="'. $url .'" '.$theme.' '.$border.'></myuw-badge>';
 
-  $result = $result. '<div class="rhs-debug">'. $this->debug. '</div>'; 
+  $result = $result. '<div class="rhs-debug">'. $this->debug. '</div>'. $shortcode; 
 
   return $result;
 }

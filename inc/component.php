@@ -28,13 +28,21 @@ if( ! class_exists('UwWebComponents_Component') ) {
            $this->name = $name;
 
            if (is_array($attsArray)) { 
-             $this->$atts =  $attsArray;
+            $this->$atts[] = array(
+              'fieldName'=>$attsArray[0],
+              'fieldValue'=>$attsArray[1], 
+              'fieldType'=>$attsArray[2]
+            );
            }
       
          }
-         public function addAtt($fieldName,$fieldValue, $fieldType, $defaultValue)
+         public function addAtt($fieldName,$fieldValue, $fieldType)
           {
-            //$this->$atts[] = 
+            $this->$atts[] = array(
+              'fieldName'=>$fieldName,
+              'fieldValue'=>$fieldValue, 
+              'fieldType'=>$fieldType
+            );
           }
 
          public function getAttsArray(){
