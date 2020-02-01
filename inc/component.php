@@ -27,14 +27,39 @@ if( ! class_exists('UwWebComponents_Component') ) {
          function __construct($name, $attsArray){
            $this->name = $name;
 
-           $this->$atts =  $attsArray;
-        //   if (is_array($attsArray)) { $this->$attsArray = $attsArray; }
+           if (is_array($attsArray)) { 
+             $this->$atts =  $attsArray;
+           }
+      
          }
+         public function addAtt($fieldName,$fieldValue, $fieldType, $defaultValue)
+          {
+            //$this->$atts[] = 
+          }
 
          public function getAttsArray(){
-          return $this->$atts;
-      }
+          return $this->$atts;      
+        }
     }
+
+    class UwWebComponents_Shortcode_Atts {
+ 
+      public $fieldName = null;
+      public $fieldValue = null;
+      public $fieldType = null;
+      public $defaultValue = null;
+
+          function __construct($fieldName,$fieldValue, f$ieldType, $defaultValue  ){
+            $this->fieldName = $fieldName;
+            $this->fieldValue = $fieldValue;
+            $this->fieldType = $fieldType;
+            $this->defaultValue = $defaultValue;
+          }
+ 
+        // public function getAttsArray(){
+        // return $this->$atts;
+        // }
+     }
  }
 
 
