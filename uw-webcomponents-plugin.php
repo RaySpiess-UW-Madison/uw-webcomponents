@@ -34,8 +34,6 @@ public function __construct( ) {
     // add_shortcode('myuw-badge', array( $this, 'myuw_badge_shortcode'));
        add_shortcode('myuw-badge', array( $this, 'add_web_component_shortcode'));
 
-
-
     // uninstall
 }
 // text domain for translation
@@ -74,8 +72,6 @@ public function add_web_component() {
   //$attsArray =  $this->shortcode->atts;
   $attsArray =  $this->shortcode->getAttsArray();
 
-  $this->debug = $this->debug.' ' .count($atts) .' - '. count($attsArray).  '<br/>';
-
   $shortcode = $name;
  // $shortcode = 'debug';
 
@@ -83,36 +79,21 @@ public function add_web_component() {
   foreach ($attsArray as $loadedAtt) {
     $this->debug = $this->debug. ' - '.  $loadedAtt["fieldName"]. ' '. $loadedAtt["fieldType"].' => ';
     $this->debug = $this->debug. ''.  $atts[$loadedAtt["fieldName"]]. '<br/>';
-
+    // default style: write att="value"
     if ($loadedAtt["fieldType"]=='default'){
        $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '="'. $atts[$loadedAtt["fieldName"]].'" ';
     }
+    // simple style: write value
     if ($loadedAtt["fieldType"]=='simple'){
       $shortcode = $shortcode. ' '. $atts[$loadedAtt["fieldName"]];
     }
   } // foreach
 
   $shortcode = '<'.$shortcode.'>';
+  $this->debug = '<br/>'. $shortcode;
   
-  $url = "https://my.wisc.edu";
-  $theme = "";
-  $border = "";
-
-  if ($atts["url"] != "") {
-     shortcode_atts( array(
-       'url',
-       'theme', 
-       'border'
-     ), $atts);
-  $url = $atts['url'];
-  $theme = $atts['theme'];
-  $border = $atts['border'];
- }
-
-
-  $result = '<myuw-badge url="'. $url .'" '.$theme.' '.$border.'></myuw-badge>';
-
-  $result = $result. '<div class="rhs-debug">'. $this->debug. '</div>.'. $shortcode; 
+  $result = $shortcode;
+  //$result = $result. '<div class="rhs-debug">'. $this->debug. '</div>.'. $shortcode; 
 
   return $result;
 }
