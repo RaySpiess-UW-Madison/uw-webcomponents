@@ -21,6 +21,8 @@ public function __construct( ) {
         array('url', '', 'default')
       );
 
+     $this->shortcode->addAtt('theme','dark', 'simple');
+
      // array('url', 'theme', 'border')
  
     // component scripts 
@@ -77,10 +79,16 @@ public function add_web_component() {
 
   // from loaded list 
    foreach ($attsArray as $loadedAtt) {
-    $this->debug = $this->debug. ' - '.  $loadedAtt["fieldName"]. ' => ';
+    $this->debug = $this->debug. ' - '.  $loadedAtt["fieldName"]. ' '. $loadedAtt["fieldType"].' => ';
     $this->debug = $this->debug. ''.  $atts[$loadedAtt["fieldName"]]. '<br/>';
 
-    $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '='. $atts[$loadedAtt["fieldName"]];
+    if ($loadedAtt["fieldType"]=='default'){
+       $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '='. $atts[$loadedAtt["fieldName"]];
+    }
+    if ($loadedAtt["fieldType"]=='simple'){
+      $shortcode = $shortcode. ' '. $atts[$loadedAtt["fieldName"]];
+   }
+
     // from the shortcode
     //foreach ($atts as $shortcodeAtt) {
       //$this->debug = $this->debug. ' -- '.  $shortcodeAtt. '<br/>';
