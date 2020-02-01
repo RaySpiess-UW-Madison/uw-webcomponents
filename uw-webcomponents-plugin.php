@@ -21,7 +21,8 @@ public function __construct( ) {
         array('url', '', 'default')
       );
 
-     $this->shortcode->addAtt('theme','dark', 'simple');
+     $this->shortcode->addAtt('theme','dark-theme', 'simple');
+     $this->shortcode->addAtt('border','white-border', 'simple');
 
      // array('url', 'theme', 'border')
  
@@ -76,24 +77,22 @@ public function add_web_component() {
   $this->debug = $this->debug.' ' .count($atts) .' - '. count($attsArray).  '<br/>';
 
   $shortcode = $name;
+ // $shortcode = 'debug';
 
   // from loaded list 
-   foreach ($attsArray as $loadedAtt) {
+  foreach ($attsArray as $loadedAtt) {
     $this->debug = $this->debug. ' - '.  $loadedAtt["fieldName"]. ' '. $loadedAtt["fieldType"].' => ';
     $this->debug = $this->debug. ''.  $atts[$loadedAtt["fieldName"]]. '<br/>';
 
     if ($loadedAtt["fieldType"]=='default'){
-       $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '='. $atts[$loadedAtt["fieldName"]];
+       $shortcode = $shortcode. ' '. $loadedAtt["fieldName"]. '="'. $atts[$loadedAtt["fieldName"]].'" ';
     }
     if ($loadedAtt["fieldType"]=='simple'){
       $shortcode = $shortcode. ' '. $atts[$loadedAtt["fieldName"]];
-   }
+    }
+  } // foreach
 
-    // from the shortcode
-    //foreach ($atts as $shortcodeAtt) {
-      //$this->debug = $this->debug. ' -- '.  $shortcodeAtt. '<br/>';
-    //}
-  }
+  $shortcode = '<'.$shortcode.'>';
   
   $url = "https://my.wisc.edu";
   $theme = "";
@@ -113,7 +112,7 @@ public function add_web_component() {
 
   $result = '<myuw-badge url="'. $url .'" '.$theme.' '.$border.'></myuw-badge>';
 
-  $result = $result. '<div class="rhs-debug">'. $this->debug. '</div>'. $shortcode; 
+  $result = $result. '<div class="rhs-debug">'. $this->debug. '</div>.'. $shortcode; 
 
   return $result;
 }
